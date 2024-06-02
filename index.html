@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Динамика упоминаний проблем в журнале про охоту</title>
+    <title>Проблемы в журнале "Охота и охотничье хозяйство"</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -24,7 +24,7 @@
                         data: data[key],
                         fill: false,
                         borderColor: getRandomColor(),
-                        tension: 0.1
+                        tension: 0.3
                     };
                 });
 
@@ -39,10 +39,37 @@
                         plugins: {
                             legend: {
                                 position: 'top',
+                                labels: {
+                                    font: {
+                                        size: 14
+                                    },
+                                    padding: 20
+                                }
                             },
-                            title: {
+                            tooltip: {
+                                intersect: true
+                            }
+                        },
+                        scales: {
+                            x: {
                                 display: true,
-                                text: 'Динамика упоминаний проблем по годам'
+                                title: {
+                                    display: true,
+                                    text: 'Год',
+                                    font: {
+                                        size: 16
+                                    }
+                                }
+                            },
+                            y: {
+                                display: true,
+                                title: {
+                                    display: true,
+                                    text: 'Количество упоминаний',
+                                    font: {
+                                        size: 16
+                                    }
+                                }
                             }
                         }
                     }
