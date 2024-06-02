@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Динамика упоминаний проблем в журнале про охоту</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <h1>Динамика упоминаний проблем в журнале про охоту</h1>
+    <canvas id="problemChart" width="800" height="400"></canvas>
+    <script>
+        fetch('dynamic_problems_data_yearly.json')
+            .then(response => response.json())
+            .then(data => {
+                const ctx = document.getElementById('problemChart').getContext('2d');
+
+                const labels = data['year'];
+                const datasets = Object.keys(data).filter(key => key !== 'year').map(key => {
+                    return {
+                        label: key,
+                        data: data[key],
+                        fill: false,
+                        borderColor: getRandomColor(),
+                        tension: 0.1
+                    };
+                });
+
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: datasets
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                                text: 'Динамика упоминаний проблем по годам'
+                            }
+                        }
+                    }
+                });
+
+                function getRandomColor() {
+                    const letters = '0123456789ABCDEF';
+                    let color = '#';
+                    for (let i = 0; i < 6; i++) {
+                        color += letters[Math.floor(Math.random() * 16)];
+                    }
+                    return color;
+                }
+            });
+    </script>
+</body>
+
+</html>
